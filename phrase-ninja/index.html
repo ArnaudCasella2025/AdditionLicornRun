@@ -489,6 +489,7 @@ dkn|Il ne pleut plus.
     pers: { title:'Personnelle / Impersonnelle', note:'collège', cats:['personnelle','impersonnelle'], domain:p => p.type === 'd' },
   };
 
+  const DEFAULT_CATS = ['declarative','interrogative','exclamative','affirmative','negative'];
   const PRESETS = {
     ce: ['declarative','interrogative','exclamative','imperative'],
     cm: ['declarative','interrogative','exclamative','imperative','affirmative','negative'],
@@ -514,14 +515,14 @@ dkn|Il ne pleut plus.
     set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} },
   };
   const settings = Object.assign(
-    { cats: PRESETS.ce.slice(), speed:'tranquille', mode:'classique', sound:true },
-    store.get('phraseNinja.settings', {})
+    { cats: DEFAULT_CATS.slice(), speed:'tranquille', mode:'classique', sound:true },
+    store.get('phraseNinja.settings.v2', {})
   );
   settings.cats = (settings.cats || []).filter(c => CATS[c]);
-  if (!settings.cats.length) settings.cats = PRESETS.ce.slice();
+  if (!settings.cats.length) settings.cats = DEFAULT_CATS.slice();
   if (!SPEEDS[settings.speed]) settings.speed = 'tranquille';
   if (settings.mode !== 'chrono') settings.mode = 'classique';
-  const saveSettings = () => store.set('phraseNinja.settings', settings);
+  const saveSettings = () => store.set('phraseNinja.settings.v2', settings);
 
   /* ---------- DOM ---------- */
   const $ = s => document.querySelector(s);
